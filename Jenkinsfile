@@ -9,7 +9,15 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git branch: "${env.BRANCH_NAME}", url: 'https://github.com/yourname/devops-build.git'
+        checkout([$class: 'GitSCM',
+          branches: [[name: "${env.BRANCH_NAME}"]],
+          doGenerateSubmoduleConfigurations: false,
+          extensions: [],
+          userRemoteConfigs: [[
+            url: 'https://github.com/Sayfscode/ecomm.git',
+            credentialsId: 'github-token' 
+          ]]
+        ])
       }
     }
 
